@@ -1,5 +1,6 @@
 import { createDB } from '../lib/db'
 import Link from 'next/link'
+import { AddToCartButton } from './AddToCartButton'
 
 async function getProducts(page: number) {
   const db = createDB()
@@ -50,6 +51,8 @@ function Product(props: ProductProps) {
       <Link href={`/product/${props.id}`}>Details</Link>
       <br />
       <Link href={`/product_edit/${props.id}`}>Edit</Link>
+      <br />
+      <AddToCartButton id={props.id} />
     </div>
   )
 }
