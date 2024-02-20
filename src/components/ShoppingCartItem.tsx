@@ -1,6 +1,3 @@
-import { ProductDetail } from './ProductDetail'
-import { Product } from './ProductList'
-
 type Props = {
   id: number
   count: number
