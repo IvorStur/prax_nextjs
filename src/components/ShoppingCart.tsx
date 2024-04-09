@@ -6,6 +6,7 @@ import { getProducts } from '../actions/getProductDetails'
 import Link from 'next/link'
 import { AddToCartButton } from './AddToCartButton'
 import { count } from 'console'
+import { MyButton } from '../app/component_templates/MyButton'
 // import { Product } from './ProductList'
 
 type productdetails = {
@@ -23,6 +24,9 @@ type ProductProps = {
 }
 
 function Product(props: ProductProps) {
+  const { addItem } = useContext(ShoppingCartContext)
+  const { removeItem } = useContext(ShoppingCartContext)
+  const { deleteItem } = useContext(ShoppingCartContext)
   // const { name, description } = props
   const name = props.name
   const url = props.url
@@ -37,6 +41,29 @@ function Product(props: ProductProps) {
       <Link href={`/product/${props.id}`}>Details</Link>
       <br />
       <div>Count: {props.count}</div>
+      <br />
+      <MyButton
+        onClick={() => {
+          // console.log('Add to cart:', props.id)
+          addItem(props.id)
+        }}
+      >
+        +
+      </MyButton>
+      <MyButton
+        onClick={() => {
+          removeItem(props.id)
+        }}
+      >
+        -
+      </MyButton>
+      <MyButton
+        onClick={() => {
+          deleteItem(props.id)
+        }}
+      >
+        Delete
+      </MyButton>
     </div>
   )
 }
