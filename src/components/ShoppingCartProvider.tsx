@@ -8,11 +8,14 @@ type Props = {
 }
 
 export function ShoppingCartProvider({ children }: Props) {
+  // const [items, setItems] = useState<ShoppingCart['items']>(() => {
+  //   // getting stored value
+  //   const saved = localStorage.getItem('items')
+  //   const initialValue = JSON.parse(saved || '[]')
+  //   return initialValue || []
+  // })
   const [items, setItems] = useState<ShoppingCart['items']>(() => {
-    // getting stored value
-    const saved = localStorage.getItem('items')
-    const initialValue = JSON.parse(saved || '[]')
-    return initialValue || []
+    return []
   })
 
   useEffect(() => {
@@ -33,11 +36,11 @@ export function ShoppingCartProvider({ children }: Props) {
     for (const i in items) {
       if (items[i].id == item) {
         items[i].count -= 1
-        if (items[i].count <= 0) {
-          deleteItem(item)
-          return
-        }
-        setItems([...items])
+        setItems(
+          items.filter((item) => {
+            return item.count > 0
+          })
+        )
         return
       }
     }

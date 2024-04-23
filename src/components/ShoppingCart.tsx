@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { AddToCartButton } from './AddToCartButton'
 import { count } from 'console'
 import { MyButton } from '../app/component_templates/MyButton'
+import { createOrder } from '../actions/createOrder'
 // import { Product } from './ProductList'
 
 type productdetails = {
@@ -96,7 +97,27 @@ export function ShoppingCart() {
           count={items.find((i) => i.id == item.id)?.count}
         />
       ))}
+      <MyButton
+        onClick={() => {
+          const count = items.reduce((acc, i) => acc + i.count, 0)
+          const price = items.reduce(
+            (acc, i) => acc + i.count * (products.find((pr) => pr.id == i.id) ?? { price: 0 }).price,
+            0
+          )
+          createOrder({
+            count: count ? count : 0,
+            totalPrice: price,
+          })
+        }}
+      >
+        Place Order
+      </MyButton>
       {/* <div>{ids}</div> */}
     </div>
   )
 }
+// type CreateOrderParams = {
+//   productId: number
+//   count: number
+//   totalPrice: number
+// }
