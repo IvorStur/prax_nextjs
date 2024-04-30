@@ -104,10 +104,18 @@ export function ShoppingCart() {
             (acc, i) => acc + i.count * (products.find((pr) => pr.id == i.id) ?? { price: 0 }).price,
             0
           )
-          createOrder({
-            count: count ? count : 0,
-            totalPrice: price,
+          const orders = items.map((item) => {
+            return {
+              product_id: item.id,
+              count: item.count,
+              totalPrice: (products.find((pr) => pr.id == item.id) ?? { price: 0 }).price * item.count,
+            }
           })
+          createOrder(orders)
+          // createOrder({
+          //   count: count ? count : 0,
+          //   totalPrice: price,
+          // })
         }}
       >
         Place Order
